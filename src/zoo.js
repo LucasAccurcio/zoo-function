@@ -92,13 +92,18 @@ function getSchedule(dayName) {
   const obj2 = { [dayName]: obj[dayName] };
   return obj2;
 }
-console.log(getSchedule('Tuesday'));
+
 function getOldestFromFirstSpecies(id) {
   // seu código aqui
 }
 
 function increasePrices(percentage) {
   // seu código aqui
+  if (!percentage) return 'Nenhum valor passado';
+  const percentual = (percentage / 100) + 1;
+  prices.Adult = Math.round((prices.Adult * percentual) * 100) / 100;
+  prices.Senior = Math.round((prices.Senior * percentual) * 100) / 100;
+  prices.Child = Math.round((prices.Child * percentual) * 100) / 100;
 }
 
 function getEmployeeCoverage(idOrName) {
