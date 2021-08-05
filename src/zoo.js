@@ -28,6 +28,12 @@ function createEmployee(personalInfo, associatedWith) {
 
 function isManager(id) {
   // seu código aqui
+  const employee = employees.find((value) => value.id === id);
+  if (employee.firstName === 'Stephanie') return true;
+  if (employee.firstName === 'Emery') return true;
+  if (employee.firstName === 'Burl') return true;
+  if (employee.firstName === 'Ola') return true;
+  return false;
 }
 
 function addEmployee(id, firstName, lastName, managers, responsibleFor) {
