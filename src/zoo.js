@@ -1,6 +1,6 @@
 const data = require('./data');
 
-const { species, employees } = require('./data');
+const { species, employees, prices } = require('./data');
 
 function getSpeciesByIds(...ids) {
   // seu código aqui
@@ -60,15 +60,25 @@ function countAnimals(especies) {
   }
   const animal = species.find((value) => value.name === especies);
   return animal.residents.length;
-
-/*   const newArray = books.map((book) => ({
-    age: book.releaseYear-book.author.birthYear, 
-    author: book.author.name,
-  } */
 }
-console.log(countAnimals());
+
 function calculateEntry(entrants) {
   // seu código aqui
+  if (!entrants) return 0;
+  if (Object.keys(entrants).length === 0) return 0;
+  const tipos = Object.keys(entrants).length;
+  const chaves = Object.keys(entrants);
+  const qtdes = Object.values(entrants);
+  const adultPrice = Object.values(prices)[0];
+  const seniorPrice = Object.values(prices)[1];
+  const childPrice = Object.values(prices)[2];
+  let sum = 0;
+  for (let index = 0; index < tipos; index += 1) {
+    if (chaves[index] === 'Adult') sum += qtdes[index] * adultPrice;
+    if (chaves[index] === 'Senior') sum += qtdes[index] * seniorPrice;
+    if (chaves[index] === 'Child') sum += qtdes[index] * childPrice;
+  }
+  return sum;
 }
 
 function getAnimalMap(options) {
