@@ -1,6 +1,6 @@
 const data = require('./data');
 
-const { species, employees, prices } = require('./data');
+const { species, employees, prices, hours } = require('./data');
 
 function getSpeciesByIds(...ids) {
   // seu código aqui
@@ -66,29 +66,33 @@ function calculateEntry(entrants) {
   // seu código aqui
   if (!entrants) return 0;
   if (Object.keys(entrants).length === 0) return 0;
-  const tipos = Object.keys(entrants).length;
-  const chaves = Object.keys(entrants);
-  const qtdes = Object.values(entrants);
-  const adultPrice = Object.values(prices)[0];
-  const seniorPrice = Object.values(prices)[1];
-  const childPrice = Object.values(prices)[2];
-  let sum = 0;
-  for (let index = 0; index < tipos; index += 1) {
-    if (chaves[index] === 'Adult') sum += qtdes[index] * adultPrice;
-    if (chaves[index] === 'Senior') sum += qtdes[index] * seniorPrice;
-    if (chaves[index] === 'Child') sum += qtdes[index] * childPrice;
-  }
-  return sum;
+  const { Adult = 0, Senior = 0, Child = 0 } = entrants;
+  return (prices.Adult * Adult) + (prices.Senior * Senior) + (prices.Child * Child);
 }
 
 function getAnimalMap(options) {
   // seu código aqui
+
 }
+// console.log((getAnimalMap()));
 
 function getSchedule(dayName) {
   // seu código aqui
+  const { Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday } = hours;
+  const obj = {
+    Tuesday: `Open from ${Tuesday.open}am until ${Tuesday.close - 12}pm`,
+    Wednesday: `Open from ${Wednesday.open}am until ${Wednesday.close - 12}pm`,
+    Thursday: `Open from ${Thursday.open}am until ${Thursday.close - 12}pm`,
+    Friday: `Open from ${Friday.open}am until ${Friday.close - 12}pm`,
+    Saturday: `Open from ${Saturday.open}am until ${Saturday.close - 12}pm`,
+    Sunday: `Open from ${Sunday.open}am until ${Sunday.close - 12}pm`,
+    Monday: 'CLOSED',
+  };
+  if (!dayName) return obj;
+  const obj2 = { [dayName]: obj[dayName] };
+  return obj2;
 }
-
+console.log(getSchedule('Tuesday'));
 function getOldestFromFirstSpecies(id) {
   // seu código aqui
 }
