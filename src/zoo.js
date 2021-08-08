@@ -130,10 +130,41 @@ function increasePrices(percentage) {
   prices.Child = Math.round((prices.Child * percentual) * 100) / 100;
 }
 
+const checkSpecies = (responsible) => {
+  const newArray = [];
+  responsible.map((id) => {
+    species.find((value) => {
+      if (value.id === id) {
+        newArray.push(value.name);
+      }
+      return '';
+    });
+    return '';
+  });
+  return newArray;
+};
+
 function getEmployeeCoverage(idOrName) {
   // seu código aqui
+  if (!idOrName) {
+    const newObj = employees.reduce((acc, curr) => {
+      acc[`${curr.firstName} ${curr.lastName}`] = checkSpecies(curr.responsibleFor);
+      return acc;
+    }, {});
+    return newObj;
+  }
+  const responsible = employees.find((value) => {
+    if (value.id === idOrName || value.firstName === idOrName || value.lastName === idOrName) {
+      return value;
+    }
+    return '';
+  });
+  const newObj2 = {
+    [`${responsible.firstName} ${responsible.lastName}`]: checkSpecies(responsible.responsibleFor),
+  };
+  return newObj2;
 }
-// console.log(getEmployeeCoverage());
+
 module.exports = {
   calculateEntry,
   getSchedule,
