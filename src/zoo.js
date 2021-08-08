@@ -72,9 +72,17 @@ function calculateEntry(entrants) {
 
 function getAnimalMap(options) {
   // seu código aqui
-
+ const location = ['NE', 'NW', 'SE', 'SW'];
+  const obj = {};
+  if (!options) {
+    location.forEach((local) => {
+      obj[local] = species.filter((value) => (value.location === local)).map((type) => type.name);
+    });
+    return obj;
+  }
 }
-// console.log((getAnimalMap()));
+
+getAnimalMap();
 
 function getSchedule(dayName) {
   // seu código aqui
@@ -109,7 +117,7 @@ function increasePrices(percentage) {
 function getEmployeeCoverage(idOrName) {
   // seu código aqui
 }
-
+// console.log(getEmployeeCoverage());
 module.exports = {
   calculateEntry,
   getSchedule,
