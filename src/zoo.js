@@ -72,7 +72,7 @@ function calculateEntry(entrants) {
 
 function getAnimalMap(options) {
   // seu código aqui
- const location = ['NE', 'NW', 'SE', 'SW'];
+  const location = ['NE', 'NW', 'SE', 'SW'];
   const obj = {};
   if (!options) {
     location.forEach((local) => {
@@ -81,8 +81,6 @@ function getAnimalMap(options) {
     return obj;
   }
 }
-
-getAnimalMap();
 
 function getSchedule(dayName) {
   // seu código aqui
