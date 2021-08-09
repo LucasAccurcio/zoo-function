@@ -70,7 +70,7 @@ function calculateEntry(entrants) {
   return (prices.Adult * Adult) + (prices.Senior * Senior) + (prices.Child * Child);
 }
 
-const getAnimalsBySex = (sex, arrayTipoAnimal) => {
+const getAnimalsBySex = (sex, arrayTipoAnimal, sort) => {
   const arrayBySex = [];
   const newArray = arrayTipoAnimal.residents
     .filter((value) => {
@@ -82,6 +82,7 @@ const getAnimalsBySex = (sex, arrayTipoAnimal) => {
   if (!arrayBySex) {
     return newArray;
   }
+  if (sort === true) return arrayBySex.sort();
   return arrayBySex;
 };
 
@@ -95,40 +96,44 @@ const getAnimals = (type, sort, sex) => {
     return nomesAnimais;
   }
   if (sex === 'female' || sex === 'male') {
-    return getAnimalsBySex(sex, typeAnimal);
+    return getAnimalsBySex(sex, typeAnimal, sort);
   }
 };
 
 const getNameByType = (local, sort, sex) => {
   const specieByLocal = species.filter((value) => (value.location === local))
     .map((type) => type.name);
-  const newArray = specieByLocal.reduce((acc, value) => {
-    acc[value] = getAnimals(value, sort, sex);
-    return acc;
-  }, []);
-  console.log(newArray);
-  return newArray;
+  const arrayObj = [];
+  let obj = {};
+  for (let i = 0; i < specieByLocal.length; i += 1) {
+    obj = {
+      [specieByLocal[i]]: getAnimals(specieByLocal[i], sort, sex),
+    };
+    arrayObj.push(obj);
+  }
+  return arrayObj;
+};
+
+const returnLocalAndType = (arrayLocation) => {
+  const obj = {};
+  arrayLocation.forEach((local) => {
+    obj[local] = species.filter((value) => (value.location === local)).map((type) => type.name);
+  });
+  return obj;
 };
 
 function getAnimalMap(options) {
   // seu código aqui
   const location = ['NE', 'NW', 'SE', 'SW'];
   const obj = {};
-  if (!options) {
-    location.forEach((local) => {
-      obj[local] = species.filter((value) => (value.location === local)).map((type) => type.name);
-    });
-    return obj;
-  }
+  if (!options) return returnLocalAndType(location);
   const { includeNames = false, sorted = false, sex = null } = options;
-  if (includeNames === true) {
-    location.forEach((local) => {
-      obj[local] = getNameByType(local, sorted, sex);
-    });
-    return obj;
-  }
+  if (includeNames === false) return returnLocalAndType(location);
+  location.forEach((local) => {
+    obj[local] = getNameByType(local, sorted, sex);
+  });
+  return obj;
 }
-console.log(getAnimalMap({ includeNames: true, sex: 'female' }));
 
 function getSchedule(dayName) {
   // seu código aqui
