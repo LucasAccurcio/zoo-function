@@ -70,6 +70,46 @@ function calculateEntry(entrants) {
   return (prices.Adult * Adult) + (prices.Senior * Senior) + (prices.Child * Child);
 }
 
+const getAnimalsBySex = (sex, arrayTipoAnimal) => {
+  const arrayBySex = [];
+  const newArray = arrayTipoAnimal.residents
+    .filter((value) => {
+      if (value.sex === sex) {
+        arrayBySex.push(value.name);
+      }
+      return '';
+    });
+  if (!arrayBySex) {
+    return newArray;
+  }
+  return arrayBySex;
+};
+
+const getAnimals = (type, sort, sex) => {
+  const typeAnimal = species.find((value) => value.name === type);
+  const nomesAnimais = typeAnimal.residents.map(({ name }) => name);
+  if (sex === null) {
+    if (sort === true) {
+      return nomesAnimais.sort();
+    }
+    return nomesAnimais;
+  }
+  if (sex === 'female' || sex === 'male') {
+    return getAnimalsBySex(sex, typeAnimal);
+  }
+};
+
+const getNameByType = (local, sort, sex) => {
+  const specieByLocal = species.filter((value) => (value.location === local))
+    .map((type) => type.name);
+  const newArray = specieByLocal.reduce((acc, value) => {
+    acc[value] = getAnimals(value, sort, sex);
+    return acc;
+  }, []);
+  console.log(newArray);
+  return newArray;
+};
+
 function getAnimalMap(options) {
   // seu código aqui
   const location = ['NE', 'NW', 'SE', 'SW'];
@@ -80,17 +120,15 @@ function getAnimalMap(options) {
     });
     return obj;
   }
-  // const { includeNames = false, sorted = false, sex = null } = options;
+  const { includeNames = false, sorted = false, sex = null } = options;
+  if (includeNames === true) {
+    location.forEach((local) => {
+      obj[local] = getNameByType(local, sorted, sex);
+    });
+    return obj;
+  }
 }
-// console.log(species);
-getAnimalMap({ includeNames: true });
-
-/* if (includeNames === true) {
-  location.forEach((local) => {
-    obj[local] = species.filter((value) => (value.location === local)).map(({ name, residents }) => name);
-  });
-  return console.log(obj);
-} */
+console.log(getAnimalMap({ includeNames: true, sex: 'female' }));
 
 function getSchedule(dayName) {
   // seu código aqui
