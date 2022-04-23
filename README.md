@@ -22,9 +22,9 @@ Neste projeto, pude desenvolver as seguintes habilidades:
 ## Executando aplicação
 
 1. Clone o repositório
-  * `git clone git@github.com:LucasAccurcio/zoo-functions.git`.
+  * `git clone git@github.com:LucasAccurcio/zoo-function.git`.
   * Entre na pasta do repositório que você acabou de clonar:
-    * `cd js-unit-tests`
+    * `cd zoo-function`
 
 
 ### 👀 Observações importantes:
